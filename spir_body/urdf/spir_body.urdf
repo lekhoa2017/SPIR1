@@ -1,0 +1,402 @@
+<?xml version="1.0"?>
+<robot name="spir_body">
+
+<!-- Centre of geometry for robot. Defined as half way between furthest vertical extremeties of HDPE frame (i.e
+     plastic orange side panels) in 3 dimensions -->
+     <link name="COG" >
+        <visual>
+        <material name="orange">
+            <color rgba="1 0.48 0.26 0.8" />
+        </material>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://spir_body/mesh/visual/frame_mesh.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+
+
+
+<!-- Centre of mass for robot-->
+    <link name="COM" />
+
+<!--    Centre of buoyancy for robot-->
+    <link name="COB" />
+    
+    <link name="sonar"/>
+    
+    <!-- depth sensor>-->
+    <link name="DS"/>
+
+
+<!--A fixed payload frame is modelled relative to the centre of gravity. Another 3 frames are modelled to simulate the movement-->
+<!--of the payload in each of the 3 dimensions due to the rubber mounts. This will allow a second IMU to be placed on the payload-->
+<!--to give the actual pose.-->
+
+<!--Fixed Payload-->
+    <link name="suspension" />
+    <link name="suspension_phant1" />
+    <link name="suspension_phant2" />
+    <link name="payload" />
+    <link name="/Hokuyo_URG_04LX_UG01_ROS"/>
+    <link name="laser"/>
+    <link name="IMU2"/>
+
+
+
+<!--LV Enclosure-->
+    <link name="LV_enclosure" >
+        <visual>
+        <material name="blue">
+            <color rgba="0.1 0.1 0.7 0.25" />
+        </material>
+        <origin xyz="-0.05 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://spir_body/mesh/visual/LV_with_mounting_plate.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+<!--Arms-->
+    <link name="Arms" >
+        <visual>
+        <material name="green">
+            <color rgba="0.1 0.9 0.1 0.8" />
+        </material>
+<!--         <origin xyz=".2 0.1 0.3" rpy="1.5708 0 -1.5708"/> -->
+	<origin xyz="-0.4 -0.1 0.3" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="package://spir_body/mesh/visual/arms.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+
+<!--IMU-->
+    <link name="IMU" >
+        <visual>
+        <material name="light blue">
+            <color rgba="0.88 0.75 0.86 1" />
+        </material>
+        <origin xyz="0 0 0" rpy="0 3.1412 0"/>
+            <geometry>
+                <mesh filename="package://spir_body/mesh/visual/IMU.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="LIDAR" >
+        <visual>
+        <material name="light blue">
+            <color rgba="0.88 0.75 0.86 1" />
+        </material>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+	   <geometry>
+                <mesh filename="package://spir_body/mesh/visual/IMU.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+
+
+
+<!--     Thruster links (thruster acts along z axis)-->
+    <link name="t1">
+        <visual>
+        <material name="green">
+            <color rgba="0.42 0.66 0.33 1" />
+        </material>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://spir_body/mesh/visual/thruster_mesh.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+
+    <link name="t2" >
+    <visual>
+    <material name="green">
+            <color rgba="0.42 0.66 0.33 1" />
+        </material>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+
+                <mesh filename="package://spir_body/mesh/visual/thruster_mesh.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+
+
+    <link name="t3" >
+    <visual>
+        <material name="green">
+            <color rgba="0.42 0.66 0.33 1" />
+        </material>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+
+                <mesh filename="package://spir_body/mesh/visual/thruster_mesh.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="t4" >
+    <visual>
+    <material name="green">
+            <color rgba="0.42 0.66 0.33 1" />
+        </material>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://spir_body/mesh/visual/thruster_mesh.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="t5" >
+    <visual>
+        <material name="blue">
+            <color rgba="0.16 0.47 0.71 1" />
+        </material>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+
+                <mesh filename="package://spir_body/mesh/visual/thruster_mesh.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="t6" >
+    <visual>
+        <material name="blue">
+            <color rgba="0.16 0.47 0.71 1" />
+        </material>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+
+                <mesh filename="package://spir_body/mesh/visual/thruster_mesh.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="t7" >
+    <visual>
+        <material name="blue">
+            <color rgba="0.16 0.47 0.71 1" />
+        </material>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+
+                <mesh filename="package://spir_body/mesh/visual/thruster_mesh.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="t8" >
+    <visual>
+        <material name="blue">
+            <color rgba="0.16 0.47 0.71 1" />
+        </material>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+
+                <mesh filename="package://spir_body/mesh/visual/thruster_mesh.STL" />
+            </geometry>
+        </visual>
+    </link>
+
+
+
+
+<!-- Joints-->
+<!--Centre of geometry to centre of mass-->
+    <joint name="COG_to_COM" type="fixed">
+        <parent link="COG"/>
+        <child link="COM"/>
+	<origin xyz="0.04 -0.01 0.1" rpy="0 0 0"/>
+	<!--<origin xyz="1.0 0.0 0.025" rpy="0 0 0"/>-->
+    </joint>
+
+    <joint name="COG_to_sonar" type="fixed">
+        <parent link="COG"/>
+        <child link="sonar"/>
+        <origin xyz="0.26 -0.14 -0.22" rpy="0 -0.785398 3.1416"/>
+    </joint>
+    
+<joint name="Arms_to_IMU2" type="fixed">
+        <parent link="Arms"/>
+        <child link="IMU2"/>
+	<!--    <origin xyz="0.29 0.07 0.250" rpy="0.5233 -0.52333 0.1744"/> <origin xyz="0.29 0.07 0.250" quaternion="0 0 -0.259 0.966"/> -->
+	<!--<origin xyz="0.29 0.07 0.250" rpy="0.7137 0.1253 0.7137"/>-->
+	<origin xyz="0.2 0.1 0.2" rpy="0 0 0"/>
+	<!-- vrep euler angle is different that rpy used here, use matlab function quat2eul to convert-->
+    </joint>
+
+<!--Centre of geometry to centre of buoyancy-->
+    <joint name="COG_to_COB" type="fixed">
+        <parent link="COG"/>
+        <child link="COB"/>
+        <origin xyz="0.15 0.03 0.15" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="COG_to_DS" type="fixed">
+        <parent link="COG"/>
+        <child link="DS"/>
+        <origin xyz="-0.35 -0.04 0" rpy="0 0 0"/>
+    </joint>
+
+    
+    <!--Centre of geometry to arms -->
+    <joint name="COG_to_arms" type="fixed">
+        <parent link="COG"/>
+        <child link="Arms"/>
+        <origin xyz="0 0 0" rpy="0 0 3.14"/>
+    </joint>
+    
+<!--IMU-->
+    <joint name="COG_to_LV" type="fixed">
+        <parent link="COG"/>
+        <child link="LV_enclosure"/>
+        <origin xyz="0.06755 -0.2835 0.1" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="COM_to_IMU" type="fixed">
+        <parent link="COM"/>
+        <child link="IMU"/>
+	<!--    <origin xyz="0.29 0.07 0.250" rpy="0.5233 -0.52333 0.1744"/> <origin xyz="0.29 0.07 0.250" quaternion="0 0 -0.259 0.966"/> -->
+	<!--<origin xyz="0.29 0.07 0.250" rpy="0.7137 0.1253 0.7137"/>-->
+	<origin xyz="0.2 0.1 0.2" rpy="0 -1.6208 -1.57"/>
+	<!-- vrep euler angle is different that rpy used here, use matlab function quat2eul to convert-->
+    </joint>
+
+<!--
+    <joint name="LV_to_IMU" type="fixed">
+        <parent link="LV_enclosure"/>
+        <child link="IMU"/>
+        <origin xyz="0.13676 0 0.06359" rpy="1.5708 0 3.1416"/>
+    </joint>
+-->
+    <joint name="COM_to_LIDAR" type="fixed">
+        <parent link="COM"/>
+        <child link="LIDAR"/>
+        <origin xyz="-0.2 -0.3 0.5" rpy="0 0 0"/>
+    </joint>
+    
+        <joint name="COG_to_laser" type="fixed">
+        <parent link="COG"/>
+        <child link="laser"/>
+<!--  <origin xyz="-0.22 -0.265 0.42" rpy="3.1416 0 0"/> -->
+    <origin xyz="-0.22 0.265 0.42" rpy="0 0 0"/>
+	</joint>
+
+    <joint name="LIDAR_to_DEVICE" type="fixed">
+        <parent link="LIDAR"/>
+        <child link="/Hokuyo_URG_04LX_UG01_ROS"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+<!--Payload-->
+<!--Fixed Payload-->
+    <joint name="COG_to_fixed_payload" type="fixed">
+        <parent link="COG"/>
+        <child link="suspension"/>
+        <origin xyz="0.12995 0 0.11989" rpy="0 0 0"/>
+    </joint>
+
+
+<!--Payload joint 1-->
+    <joint name="fixed_payload_to_phant_1" type="revolute">
+        <parent link="suspension"/>
+        <child link="suspension_phant1"/>
+        <origin xyz="0 0 0.015" rpy="0 0 0"/>
+        <axis xyz="0 0 1" />
+        <limit upper="0.04" lower="-0.04" effort="10" velocity="10" />
+    </joint>
+
+
+<!--Payload joint 2-->
+    <joint name="fixed_payload_to_phant_2" type="revolute">
+        <parent link="suspension_phant1"/>
+        <child link="suspension_phant2"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="0 1 0" />
+        <limit upper="0.04" lower="-0.04" effort="10" velocity="10" />
+    </joint>
+
+
+<!--This joint becomes the dynamic payload joint. Other links on the payload are referenced here-->
+<!--Payload joint 3-->
+    <joint name="fixed_payload_to_phant_3" type="revolute">
+        <parent link="suspension_phant2"/>
+        <child link="payload"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="1 0 0" />
+        <limit upper="0.04" lower="-0.04" effort="10" velocity="10" />
+    </joint>
+
+
+
+
+<!-- Thrusters-->
+    <joint name="COG_to_t1" type="fixed">
+        <parent link="COG"/>
+        <child link="t1"/>
+        <origin xyz="0.23365 0.3576 -0.139" rpy="-1.5708 0 -2.3652" />
+    </joint>
+
+
+    <joint name="COG_to_t2" type="fixed">
+        <parent link="COG"/>
+        <child link="t2"/>
+        <origin xyz="-0.28521 0.2124 -0.139" rpy="-1.5708 0 -0.7854" />
+    </joint>
+
+
+    <joint name="COG_to_t3" type="fixed">
+        <parent link="COG"/>
+        <child link="t3"/>
+        <origin xyz="-0.28521 -0.2124 -0.139" rpy="-1.5708 0 -2.3652" />
+    </joint>
+
+
+    <joint name="COG_to_t4" type="fixed">
+        <parent link="COG"/>
+        <child link="t4"/>
+        <origin xyz="0.23365 -0.3576 -0.139" rpy="-1.5708 0 -0.7854" />
+    </joint>
+
+
+    <joint name="COG_to_t5" type="fixed">
+        <parent link="COG"/>
+        <child link="t5"/>
+        <origin xyz="0.4175 0.3375 -0.24012" rpy="0 0 0" />
+    </joint>
+
+
+    <joint name="COG_to_t6" type="fixed">
+        <parent link="COG"/>
+        <child link="t6"/>
+        <origin xyz="-0.2975 0.3375 -0.24012" rpy="0 0 0" />
+    </joint>
+
+
+    <joint name="COG_to_t7" type="fixed">
+        <parent link="COG"/>
+        <child link="t7"/>
+        <origin xyz="-0.2975 -0.3375 -0.24012" rpy="0 0 3.141592654" />
+    </joint>
+
+
+    <joint name="COG_to_t8" type="fixed">
+        <parent link="COG"/>
+        <child link="t8"/>
+        <origin xyz="0.4175 -0.3375 -0.24012" rpy="0 0 3.141592654" />
+    </joint>
+
+
+
+
+
+</robot>

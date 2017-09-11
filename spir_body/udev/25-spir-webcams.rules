@@ -1,0 +1,7 @@
+# Turns out both webcams have no unique attributes :(
+# Solution may be to identify them according to USB port
+
+# Webcam F100 number 1: ATTRS{serial}=="200901010001"
+#SUBSYSTEM=="video4linux", BUS=="usb", ATTRS{serial}=="200901010001", SYMLINK+="video_spir_1"
+#SUBSYSTEM=="video4linux", BUS=="usb", ATTRS{serial}=="200901010001", SYMLINK+="video_spir_2"
+

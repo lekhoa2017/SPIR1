@@ -1,0 +1,40 @@
+pub_rate: 1.0 
+base_path: ''
+analyzers:
+  network:
+     type: diagnostic_aggregator/GenericAnalyzer
+     path: Network Status
+     find_and_remove_prefix: 'diagnos'
+     timeout: 15.0        
+     num_items: 6        
+  joystick:
+    type: diagnostic_aggregator/AnalyzerGroup
+    path: Joysticks
+    analyzers:
+      joy_thruster:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: Joy Thruster
+        timeout: 5.0
+        find_and_remove_prefix: Joystick_Thruster
+      joy_arm:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: Joy arm
+        timeout: 5.0
+        find_and_remove_prefix: Joystick_Arm
+  laser:
+    type: diagnostic_aggregator/AnalyzerGroup 
+    path: Lasers
+    analyzers:
+      laser_scan:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: Laser Scan
+        find_and_remove_prefix: 'laser:'
+      laser_driver:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: Laser Driver
+        find_and_remove_prefix: 'laser:'
+  imu:
+    type: diagnostic_aggregator/GenericAnalyzer 
+    path: IMU
+    find_and_remove_prefix: 'IMU:'
+   

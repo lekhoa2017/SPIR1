@@ -1,0 +1,202 @@
+# Time in seconds
+# Current in mAmps
+# position, velocity, and acceleration in device units
+motor1:
+  actuator_name: 'Node_1'
+  serial_number: '0x602077012268'
+  operation_mode: 'profile_velocity'
+  clear_faults: true
+
+  motor:
+    type: 10
+    ec_motor:
+      nominal_current: 800
+      max_output_current: 900
+      thermal_time_constant: 18.4
+      number_of_pole_pairs: 8
+
+  sensor:
+    type: 2
+    hall_sensor:
+      inverted_polarity: false
+
+  safety:
+    max_following_error: 20000
+    max_profile_position: 3500
+    max_acceleration: 22000
+
+  position_profile:
+    velocity: 5000
+    acceleration: 22000
+    deceleration: 22000
+
+  velocity_profile:
+    acceleration: 22000
+    deceleration: 22000
+
+motor2:
+  actuator_name: 'Node_2'
+  serial_number: '0x602077012278'
+  operation_mode: 'profile_velocity'
+  clear_faults: true
+
+  motor:
+    type: 10
+    ec_motor:
+      nominal_current: 800
+      max_output_current: 900
+      thermal_time_constant: 18.4
+      number_of_pole_pairs: 8
+
+  sensor:
+    type: 2
+    hall_sensor:
+      inverted_polarity: false
+
+  safety:
+    max_following_error: 20000
+    max_profile_position: 3500
+    max_acceleration: 22000
+
+  position_profile:
+    velocity: 5000
+    acceleration: 22000
+    deceleration: 22000
+
+  velocity_profile:
+    acceleration: 22000
+    deceleration: 22000
+
+motor3:
+  actuator_name: 'Node_3'
+  serial_number: '0x602077012274'
+  operation_mode: 'profile_velocity'
+  clear_faults: true
+
+  motor:
+    type: 10
+    ec_motor:
+      nominal_current: 800
+      max_output_current: 900
+      thermal_time_constant: 18.4
+      number_of_pole_pairs: 8
+
+  sensor:
+    type: 2
+    hall_sensor:
+      inverted_polarity: false
+
+  safety:
+    max_following_error: 20000
+    max_profile_position: 5000
+    max_acceleration: 22000
+
+  position_profile:
+    velocity: 3500
+    acceleration: 22000
+    deceleration: 22000
+
+  velocity_profile:
+    acceleration: 22000
+    deceleration: 22000
+
+motor4:
+  actuator_name: 'Node_4'
+  serial_number: '0x602077012242'
+  operation_mode: 'profile_velocity'
+  clear_faults: true
+
+  motor:
+    type: 10
+    ec_motor:
+      nominal_current: 800
+      max_output_current: 900
+      thermal_time_constant: 18.4
+      number_of_pole_pairs: 8
+
+  sensor:
+    type: 2
+    hall_sensor:
+      inverted_polarity: false
+
+  safety:
+    max_following_error: 20000
+    max_profile_position: 3500
+    max_acceleration: 22000
+
+  position_profile:
+    velocity: 5000
+    acceleration: 22000
+    deceleration: 22000
+
+  velocity_profile:
+    acceleration: 22000
+    deceleration: 22000
+
+motor5:
+  actuator_name: 'Node_5'
+  serial_number: '0x602077012293'
+  operation_mode: 'profile_velocity'
+  clear_faults: true
+
+  motor:
+    type: 10
+    ec_motor:
+      nominal_current: 800
+      max_output_current: 900
+      thermal_time_constant: 18.4
+      number_of_pole_pairs: 8
+
+  sensor:
+    type: 2
+    hall_sensor:
+      inverted_polarity: false
+
+  safety:
+    max_following_error: 20000
+    max_profile_position: 3500
+    max_acceleration: 22000
+
+  position_profile:
+    velocity: 5000
+    acceleration: 22000
+    deceleration: 22000
+
+  velocity_profile:
+    acceleration: 22000
+    deceleration: 22000
+
+motor6:
+  actuator_name: 'Node_6'
+  serial_number: '0x602077016930'
+  operation_mode: 'profile_velocity'
+  clear_faults: true
+
+  motor:
+    type: 10
+    ec_motor:
+      nominal_current: 800
+      max_output_current: 900
+      thermal_time_constant: 18.4
+      number_of_pole_pairs: 8
+
+  sensor:
+    type: 2
+    hall_sensor:
+      inverted_polarity: false
+
+  safety:
+    max_following_error: 20000
+    max_profile_position: 3500
+    max_acceleration: 22000
+
+  position_profile:
+    velocity: 5000
+    acceleration: 22000
+    deceleration: 22000
+
+  velocity_profile:
+    acceleration: 22000
+    deceleration: 22000
+
+

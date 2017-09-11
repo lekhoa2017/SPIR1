@@ -1,0 +1,2 @@
+# FTDI USB adapter for Advanced Navigation IMU
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", ATTRS{serial}=="FTWMB9GK", SYMLINK+="imu0"

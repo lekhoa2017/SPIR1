@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+
+<!-- This launch file starts/loads all the things necessary for the
+spir_body to operate. Generally it is included into a parent launch file -->
+
+<!-- Put URDF on parameter server -->
+<param name="spir_body_description" command="cat $(find spir_body)/urdf/spir_body.urdf" />
+
+
+<!-- Start joint_state_publisher for publishing spir_body joint (suspension) states -->
+<arg name="gui" default="False" />
+<param name="use_gui" value="$(arg gui)"/>
+<node name="suspension_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" required="true" clear_params="true">
+	<remap from="robot_description" to="spir_body_description"/>
+</node>
+
+<!-- Start robot_state_publisher to publish spir_body TFs -->
+<node name="spir_body_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" required="true" clear_params="true">
+	<remap from="robot_description" to="spir_body_description"/>
+</node>
+
+<node pkg="spir_body" type="spir_tf" name="spir_tf" output="screen" >
+</node>
+  
+
+</launch>

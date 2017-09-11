@@ -1,0 +1,2 @@
+# FTDI USB to RS485 adapter for Tritech sonar
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", ATTRS{serial}=="FTXYJGVJ", SYMLINK+="sonar0"

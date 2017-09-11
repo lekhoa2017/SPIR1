@@ -1,0 +1,12 @@
+Udev rules are used to assign specific device names to hardware, e.g. webcams, arduinos, etc.
+
+A useful guide is available at
+http://www.reactivated.net/writing_udev_rules.html
+http://hackaday.com/2009/09/18/how-to-write-udev-rules/
+
+To install the rules:
+
+1) Copy *.rules files into the /etc/udev/rules.d/ directory
+2) At the command line, type: 'sudo service udev restart'
+
+or run the bash script "install_rules.sh"
