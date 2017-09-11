@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<launch>
+
+<!-- This launch file starts/loads all the things necessary body control and pile detection -->
+
+
+<node pkg="spir_atnv" type="control_node" name="control_node"   output="screen">
+    <!-- 1. max thruster force
+	 2. weight to smooth thruster command, consider this in the objective function
+	 3. a vlaue to denote gravity( = buoyancy)* distance (between centers of gavity and buoyancy)
+	 4. change of buoyanch from depth change
+         5. max generaized force (net force)
+    -->
+    <param name="max_thruster_val" value = "17.0"/>
+    <param name="smooth_thruster_w" value = "0.2"/> 
+    <param name="DGB" value = "-33.0"/>
+    <param name="BuoF" value = "0.0"/>
+    <rosparam param="max_gf">[30,30,45,10,10,8]</rosparam>
+    
+    <!--  a = a_d + this->k1 * dVel + this->k2 * dEta;-->
+    <!---->
+    <rosparam param="c">[0.2,0.2,0.02,0.005,0.005,0.0]</rosparam>
+    <rosparam param="k1">[0.0,0.0,0.4,0.5,0.5,0.5]</rosparam>
+    <rosparam param="k2">[0.0,0.0,0.8,0.2,0.2,0.5]</rosparam>
+    
+  
+    
+    <!-- 
+    u2(t) = k * [e(t) - e(0)] + integral{k * e(T) + B * sign[e(t)]} * dT + f1
+    
+    <rosparam param="k">[0,0,10,5,5,50]</rosparam>
+    <rosparam param="b">[0,0,2,1,1,10]</rosparam>
+    <rosparam param="a">[0,0,0.5,0.3,0.3,0.2]</rosparam>
+    <rosparam param="c">[0,0,0.4,0.2,0.2,0.01]</rosparam>
+    -->
+    
+    <remap from="thrust_command" to="thrust_command_imu"/>
+</node>
+
+<node pkg="spir_atnv" type="reference_generator" name="reference_generator"   output="screen">
+   
+</node>
+
+
+</launch>

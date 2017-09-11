@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<launch>
+
+<!-- This launch file starts/loads all the things necessary body contro and pile detection -->
+
+
+  <!-- controlOutput = k * (e - initialE) + c*integral + f1; -->
+  <!-- integral += timeStep * ( k * e + b * sign ( e ) )--> 
+  <!-- e = a * W - angVel;-->
+<!-- -->
+<node pkg="spir_atnv" type="imu_control" name="imu_control"   >
+   
+  <!--
+    <param name="k" value="1"/>
+    <param name="b" value="1"/>
+    <param name="a" value="1"/>
+    <param name="c" value="0.1"/>
+  -->
+  
+    <param name="k" value="10"/>
+    <param name="b" value="1.0"/>
+    <param name="a" value="0.5"/>
+    <param name="c" value="0.4"/>
+    <param name="f1" value="[0,0,0]"/>
+  
+    <!--
+    <param name="k" value="5"/>
+    <param name="b" value="1.0"/>
+    <param name="a" value="0.5"/>
+    <param name="c" value="0.3"/>
+    <param name="f1" value="[0,0,0]"/>
+    -->
+    
+    <!--
+    <param name="z_k" value="0"/>
+    <param name="z_b" value="0"/>
+    <param name="z_a" value="0"/>
+    <param name="z_c" value="0"/>
+    <param name="depth" value="0"/>
+    -->
+    
+    <param name="z_k" value="100"/>
+    <param name="z_b" value="5.0"/>
+    <param name="z_a" value="0.3"/>
+    <param name="z_c" value="0.4"/>
+    <param name="depth" value="0.5"/>
+    <param name="max_integral_z" value="100"/>
+    <param name="max_integral_s" value="35"/>
+    <param name="max_torque_depth" value="12"/>
+    <param name="max_force_stabilization" value="5"/>
+    
+    
+    <param name="Qz" value="0,0,0,0.000001"/>
+    <param name="Rz" value="0.1"/>
+    <param name="Pz" value="1,0,0,1"/>
+    
+    
+    <remap from="thrust_command" to="thrust_command_imu_null"/>
+</node>
+
+
+
+
+<!-- for debug use only when bag data is used-->
+<!-- 
+<node pkg="spir_body" type="laser_interface" name="laser_interface"   >
+  </node>
+-->
+<!--
+<node pkg="spir_body" type="sonar_depth_interface" name="sonar_depth_interfaece" output = "screen"  >
+  	<param name="intensity_cut" value="170"/>
+	<param name="mini_dist" value=" 0.5"/>
+  </node>
+-->
+  
+
+<!-- Start IMU control node and set parameters -->
+<!--  -->
+  
+<!--
+   e = -a_t * w_xy + ( vel + skewMatrix ( angVel ) *X );
+  zeVector[2] =z_t*w_z ( 2 )-vel ( 2 );
+  e =  a_r*w -  angVel;
+      integralTranslate += timeStep * ( k_t * translateE + b_t * sign ( translateE ) );
+    integralRotate += timeStep * ( k_r * rotateE + b_r * sign ( rotateE ) );
+      rotateControlOutput = k_r * ( rotateE ) + c_r*integralRotate ;
+    translateControlOutput = k_t* ( translateE ) + c_t*integralTranslate ;
+-->
+
+<!-- -->
+<node pkg="spir_atnv" type="atnv_control" name="atnv_control" output="screen" >  
+    <param name="k_r" value="10"/>
+    <param name="b_r" value="1.0"/>
+    <param name="a_r" value="0.5"/>
+    <param name="c_r" value="0.4"/>
+    <param name="f1" value="[0,0,0]"/>
+    <param name="k_t" value="100"/>
+    <param name="b_t" value="1.0"/>
+    <param name="a_t" value="0.3"/>
+    <param name="z_t" value="0.1"/>
+    <param name="c_t" value="0.4"/>
+    <param name="g" value="0.7"/>
+    <remap from="xy" to="pile_state"/>
+    
+    <param name="Qx" value="0.0,0,0,0.0005"/>
+    <param name="Rx" value="0.1"/>
+    <param name="Px" value="1,0,0,1"/>
+    
+    <param name="Qy" value="0.0,0,0,0.0005"/>
+    <param name="Ry" value="0.1"/>
+    <param name="Py" value="1,0,0,1"/>
+ 
+    <param name="integral_x_max" value="5"/>
+    <param name="integral_y_max" value="5"/>
+    <param name="integral_z_max" value="100"/>
+    <param name="integral_s_max" value="5"/>
+
+    <param name="Qz" value="0,0,0,0.000001"/>
+    <param name="Rz" value="0.1"/>
+    <param name="Pz" value="1,0,0,1"/>
+    <remap from="thrust_command_atnv" to="thrust_command_atnv"/>
+ 
+  </node>
+
+
+</launch>

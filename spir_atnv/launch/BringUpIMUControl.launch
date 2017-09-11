@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<launch>
+
+<!-- This launch file starts/loads all the things necessary body control and pile detection -->
+
+
+  <!-- controlOutput = k * (e - initialE) + c*integral + f1; -->
+  <!-- integral += timeStep * ( k * e + b * sign ( e ) )--> 
+  <!-- e = a * W - angVel;-->
+<!-- -->
+<node pkg="spir_atnv" type="imu_control" name="imu_control"   output="screen">
+   
+  <!--
+    <param name="k" value="1"/>
+    <param name="b" value="1"/>
+    <param name="a" value="1"/>
+    <param name="c" value="0.1"/>
+  -->
+  
+  
+    <param name="k" value="10"/>
+    <param name="b" value="2.0"/>
+    <param name="a" value="0.5"/>
+    <param name="c" value="0.4"/>
+    <param name="f1" value="[0,0,0]"/>
+  <!--
+    <param name="k" value="0.0"/>
+    <param name="b" value="0.0"/>
+    <param name="a" value="0.0"/>
+    <param name="c" value="0.0"/>
+    <param name="f1" value="[0,0,0]"/>  
+    -->
+    <!--
+    <param name="k" value="5"/>
+    <param name="b" value="1.0"/>
+    <param name="a" value="0.5"/>
+    <param name="c" value="0.3"/>
+    <param name="f1" value="[0,0,0]"/>
+    -->
+    <!-- 
+    <param name="z_k" value="0"/>
+    <param name="z_b" value="0"/>
+    <param name="z_a" value="0"/>
+    <param name="z_c" value="0"/>
+    <param name="depth" value="0"/>
+    -->
+       
+    <param name="z_k" value="100"/>
+    <param name="z_b" value="10.0"/>
+    <param name="z_a" value="0.5"/>
+    <param name="z_c" value="0.4"/>
+    <param name="depth" value="0.5"/>
+    
+    <param name="max_integral_z" value="200"/>
+    <param name="max_integral_s" value="20"/>
+    <param name="max_torque_depth" value="17"/>
+    <param name="max_force_stabilization" value="6"/>
+    
+    
+    <param name="Qz" value="0,0,0,0.000001"/>
+    <param name="Rz" value="0.1"/>
+    <param name="Pz" value="1,0,0,1"/>
+    
+    
+    <remap from="thrust_command" to="thrust_command_imu"/>
+</node>
+
+
+<!-- Start IMU control node and set parameters -->
+<!--  -->
+  
+<!--
+   e = -a_t * w_xy + ( vel + skewMatrix ( angVel ) *X );
+  zeVector[2] =z_t*w_z ( 2 )-vel ( 2 );
+  e =  a_r*w -  angVel;
+      integralTranslate += timeStep * ( k_t * translateE + b_t * sign ( translateE ) );
+    integralRotate += timeStep * ( k_r * rotateE + b_r * sign ( rotateE ) );
+      rotateControlOutput = k_r * ( rotateE ) + c_r*integralRotate ;
+    translateControlOutput = k_t* ( translateE ) + c_t*integralTranslate ;
+-->
+</launch>

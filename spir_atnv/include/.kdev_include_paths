@@ -1,0 +1,4 @@
+RESOLVE: SOURCE= BUILD=/home/fred/catkin_ws/devel
+/opt/ros/indigo/include
+/usr/include
+/usr/include/eigen3
