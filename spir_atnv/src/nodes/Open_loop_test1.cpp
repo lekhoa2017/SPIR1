@@ -21,9 +21,10 @@ class TeleopJoy{
 	public:
 	TeleopJoy();
 	ros::NodeHandle n;
+	ros::NodeHandle nh;
 	ros::Timer timer1;
 	void cb_timer(const ros::TimerEvent& event);
-	ros::Publisher pub1;
+	ros::Publisher pub_command;
 	private:
 	// Callback functions
 	double deadband(double in, double H, double L);
@@ -75,10 +76,20 @@ class TeleopJoy{
 TeleopJoy::TeleopJoy() // Constructors method
 {
 	// Set control gains
-
+	std::vector<double> Gw;
+	Gw.resize(6);
 
 	G << 20,20,15,5,5,15;  // Surge, Sway, heave, Roll, Pitch, Yaw
 
+
+	// Retrieve control gain
+	nh.getParam("Gain",Gw);
+
+    for (int i=0;i<6;i++)
+    {
+	    G(i) = Gw[i];
+
+    }
 	// Initialize control signal
 
 	this->c_state.setZero();
@@ -99,7 +110,7 @@ TeleopJoy::TeleopJoy() // Constructors method
 
 
 
-	pub1 = n.advertise<std_msgs::String>("chatter", 1000);
+	pub_command = n.advertise<std_msgs::Float32MultiArray>("command", 2);
 	control_pub = n.advertise<spir_atnv::ThrustStamped> ( "thrust_command_out", 2 );
 	sub_joy = n.subscribe<sensor_msgs::Joy>("joy", 10, &TeleopJoy::cb_joy,this);
 
@@ -195,12 +206,12 @@ void TeleopJoy::generalizedForces2ThrustersForces ( const Eigen::Matrix< double,
 void TeleopJoy::cb_joy(const sensor_msgs::Joy::ConstPtr& joy)
 {
 	// Receive command
-	c_state(0)=this->deadband(joy->axes[3],0.1,-0.1);  	  // Surge command
-	c_state(1)=-1*this->deadband(joy->axes[0],0.1,-0.1);     // Sway command
-	c_state(2)=-1*this->deadband(joy->axes[1],0.1,-0.1);     // Heave command
-	c_state(3)=-1*this->deadband(joy->axes[4],0.1,-0.1);     // Roll command
-	c_state(4)=-1*this->deadband(joy->axes[5],0.1,-0.1);    // Pitch command
-	c_state(5)=-1*this->deadband(joy->axes[2],0.1,-0.1);    // Yaw command
+	c_state(0) = this->deadband(joy->axes[3],0.1,-0.1);  	// Surge command
+	c_state(1) = this->deadband(joy->axes[0],0.1,-0.1);     // Sway command
+	c_state(2) = this->deadband(joy->axes[1],0.1,-0.1);     // Heave command
+	c_state(3) = -1*this->deadband(joy->axes[4],0.1,-0.1);  // Roll command
+	c_state(4) = this->deadband(joy->axes[5],0.1,-0.1);    // Pitch command
+	c_state(5) = this->deadband(joy->axes[2],0.1,-0.1);     // Yaw command
 
 
 }
@@ -208,22 +219,28 @@ void TeleopJoy::cb_joy(const sensor_msgs::Joy::ConstPtr& joy)
 void TeleopJoy::cb_timer(const ros::TimerEvent& event)
 {
 
-	std_msgs::String str;
+	std_msgs::Float32MultiArray command;
 
-	str.data = "hello world";
-	pub1.publish(str);
 
 	for (int i=0;i<6;i++)
 	{
 		M_force(i)=G(i)*c_state(i);
 	}
 
+	 command.data.resize(6);
+	    for (int i=0; i<6; i++)
+	    {
+	    	command.data[i]=M_force(i);
+	    }
+
+	ROS_INFO_STREAM("Command to SPIR: " << command);
+	pub_command.publish(command);
 
 	// Output control signal for each thruster
     spir_atnv::ThrustStamped thrust;
     std::string suffix = "atnv";
     generalizedForces2ThrustersForces ( M_force,thrust, suffix );
-    //ROS_INFO_STREAM(thrust);
+    ROS_INFO_STREAM("Command to thrusters: " << thrust);
     this->control_pub.publish ( thrust ); // Publish  commands to thruster controller
 
 

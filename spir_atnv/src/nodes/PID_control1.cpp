@@ -106,10 +106,23 @@ TeleopJoy::TeleopJoy() // Constructors method
 	n.param("Derivative gains",Kd,Kd);
 	n.param("Antiwindup gains",Kw,Kw);*/
 
+	// Get control parameters from launch file
+	 std::vector<double> Gw;
+	 Gw.resize(5);
+	 n.getParam("c",Gw);
+
+	 std::vector<double> k1w;
+	 k1w.resize(6);
+	 n.getParam("k1",k1w);
+
+	 std::vector<double> k2w;
+	 k2w.resize(6);
+	 n.getParam("k2",k2w);
+
 	G <<20,20,20,20;
-	Kp <<20,20,20,20;
-	Ki <<2,2,2,2;
-	Kd <<1,1,1,1;
+	Kp <<5,5,5,5;
+	Ki <<0.2,0.2,0.2,0.2;
+	Kd <<0,0,0,0;
 	Kw <<1,1,1,1;
 
 	// Initialize error
@@ -143,7 +156,7 @@ TeleopJoy::TeleopJoy() // Constructors method
 	dt=0.1;
 
 
-	control_pub = n.advertise<spir_atnv::ThrustStamped> ( "thrust_command", 2 );
+	control_pub = n.advertise<spir_atnv::ThrustStamped> ( "thrust_command_out", 2 );
 	sub_joy = n.subscribe<sensor_msgs::Joy>("joy", 10, &TeleopJoy::cb_joy,this);
 	sub_body_state=n.subscribe<std_msgs::Float32MultiArray>("robot_state_body", 1, &TeleopJoy::cb_body_state,this);
 
@@ -194,12 +207,12 @@ Eigen::Matrix<double,8,1> TeleopJoy::Thruster_Allocation ( const Eigen::Matrix< 
 	double b=0.5;
 	double  D= std::sqrt(std::pow(a,2)+std::pow(b,2));
 	const double a1=1/std::sqrt(2);
-	M << a1,  a1,  a1,   a1, 0,   0,     0,   0,
-		 a1, -a1,  a1,  -a1, 0,   0,     0,   0,
-		 0,   0,   0,    0,  1,   1,     1,   1,
-		 0,   0,   0,    0,  b/2, -b/2, -b/2, b/2,
-		 0,   0,   0,    0,  a/2, a/2,  -a/2, -a/2,
-		 D,  -D,  -D,    D,  0,    0,    0,    0;
+	M <<  a1,   a1,   a1,    a1, 0,   0,     0,   0,
+			 -a1,   a1,  -a1,    a1, 0,   0,     0,   0,
+			   0,   0,    0,      0, 1,   1,     1,   1,
+			   0,   0,    0,      0, b/2, b/2,  -b/2, -b/2,
+			   0,   0,    0,      0, -a/2, a/2,  a/2, -a/2,
+			  -D,  -D,    D,      D,  0,    0,    0,    0;
 	temp=M*M.transpose();
 	u=M.transpose()*temp.inverse()*gf; // pseudo inverse matrix
 
