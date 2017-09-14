@@ -1,0 +1,21 @@
+<launch>
+ <!-- PID control -->
+	<node pkg="spir_atnv" type="PID_control1" name="PID_control1"  />
+   	<rosparam param="Gain">[20,20,0.3,10]</rosparam>
+	<rosparam param="Kp">[5,5,5,5]</rosparam>
+	<rosparam param="Ki">[0.2,0.2,0.2,0.2]</rosparam>
+	<rosparam param="Kd">[0,0,0,0]</rosparam>
+	<rosparam param="Kw">[1,1,1,1]</rosparam>
+
+<!-- Send commands to thrusters -->
+ 	<node pkg="spir_thrusters" type="thruster_interface" name="thruster_interface" output="screen" />
+
+<!-- Actual SPIR state from sensor estimator -->
+<node pkg="spir_sensorprocessing" type="state_estimator" name="robot_state_estimator"   output="screen"> 
+    <param name="Qz" value="0,0,0,0.000001"/>
+    <param name="Rz" value="0.1"/>
+    <param name="Pz" value="1,0,0,1"/>
+</node>
+
+</launch>
+
